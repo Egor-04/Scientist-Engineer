@@ -9,19 +9,27 @@ public class MouseLook : MonoBehaviour
     public Camera PlayerCamera;
     [SerializeField] private Transform _body;
 
+    [Header("Zoom")]
+    [SerializeField] private float _zoomSpeed = 0.07f;
+    [SerializeField] private float _zoomValue = 30;
+    [SerializeField] private KeyCode _zoomButton = KeyCode.Mouse1;
+
     [Header("Clamp Rotation")]
     [SerializeField] private float _minRotation = -90;
     [SerializeField] private float _maxRotation = 90;
 
     private Vector3 _clampVerticalRotation;
+    private float _cachedZoom;
 
     private void Start()
     {
         PlayerCamera = GetComponent<Camera>();
+        _cachedZoom = PlayerCamera.fieldOfView;
     }
 
     private void Update()
     {
+        Zoom();
         MouseRotation();
     }
 
@@ -39,5 +47,20 @@ public class MouseLook : MonoBehaviour
 
         //Body Rotation
         _body.Rotate(0f, mouseHorizontal, 0f);
+    }
+
+    private void Zoom()
+    {
+        if (PlayerStates.PlayerStatesScript.CanZoom)
+        {
+            if (Input.GetKey(_zoomButton))
+            {
+                PlayerCamera.fieldOfView = Mathf.Lerp(PlayerCamera.fieldOfView, _zoomValue, _zoomSpeed);
+            }
+            else
+            {
+                PlayerCamera.fieldOfView = Mathf.Lerp(PlayerCamera.fieldOfView, _cachedZoom, _zoomSpeed);
+            }
+        }
     }
 }
