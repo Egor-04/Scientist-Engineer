@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Camera")]
+    [SerializeField] private Transform _cameraTransform;
+
     [Header("Values")]
     public float PlayerHP;
 
@@ -17,6 +20,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float _height = 2f;
     [SerializeField] private float _crouchHeight = 1f;
     [SerializeField] private float _crawlHeight = 0.5f;
+    [SerializeField] private float _cameraHeight = 80f;
+    [SerializeField] private float _cameraCrouchHeight = 70f;
+    [SerializeField] private float _cameraCrawlHeight = 60f;
 
     [Header("Jump Force")]
     [SerializeField] private float _jumpForce = 30f;
@@ -114,6 +120,7 @@ public class Player : MonoBehaviour
                 _speed = _crouchSpeed;
                 _playerCollider.height = _crouchHeight;
                 _characterController.height = _crouchHeight;
+                _cameraTransform.position = new Vector3(_cameraTransform.position.x, _cameraCrouchHeight, _cameraTransform.position.z);
                 _isCrouchEnable = true;
                 _isCrawlEnable = false;
             }
@@ -122,6 +129,7 @@ public class Player : MonoBehaviour
                 _speed = _chachedSpeed;
                 _playerCollider.height = _height;
                 _characterController.height = _height;
+                _cameraTransform.position = new Vector3(_cameraTransform.position.x, _cameraHeight, _cameraTransform.position.z);
                 _isCrouchEnable = false;
                 _isCrawlEnable = false;
             }
@@ -137,6 +145,7 @@ public class Player : MonoBehaviour
                 _speed = _crawlSpeed;
                 _playerCollider.height = _crawlHeight;
                 _characterController.height = _crawlHeight;
+                _cameraTransform.position = new Vector3(_cameraTransform.position.x, _cameraCrawlHeight, _cameraTransform.position.z);
                 _isCrouchEnable = false;
                 _isCrawlEnable = true;
             }
@@ -145,6 +154,7 @@ public class Player : MonoBehaviour
                 _speed = _chachedSpeed;
                 _playerCollider.height = _crouchHeight;
                 _characterController.height = _crouchHeight;
+                _cameraTransform.position = new Vector3(_cameraTransform.position.x, _cameraCrouchHeight, _cameraTransform.position.z);
                 _isCrouchEnable = true;
                 _isCrawlEnable = false;
             }
@@ -165,6 +175,7 @@ public class Player : MonoBehaviour
             _speed = _chachedSpeed;
             _playerCollider.height = _height;
             _characterController.height = _height;
+            _cameraTransform.position = new Vector3(_cameraTransform.position.x, _cameraHeight, _cameraTransform.position.z);
             _isCrouchEnable = false;
         }
         else if (Input.GetKeyDown(ButtonJump) && _isCrawlEnable)
@@ -172,6 +183,7 @@ public class Player : MonoBehaviour
             _speed = _chachedSpeed;
             _playerCollider.height = _crouchHeight;
             _characterController.height = _crouchHeight;
+            _cameraTransform.position = new Vector3(_cameraTransform.position.x, _cameraCrouchHeight, _cameraTransform.position.z);
             _isCrawlEnable = false;
             _isCrouchEnable = true;
         }
