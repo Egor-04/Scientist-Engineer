@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class Holder : MonoBehaviour
 {
+    [Header("Scroll Holder Point Sensitivity")]
+    [SerializeField] private float _sensitivity = 10f;
+
     [Header("Ray Length")]
     [SerializeField] private float _rayLength;
 
@@ -15,17 +18,16 @@ public class Holder : MonoBehaviour
     [SerializeField] private KeyCode _holdButton = KeyCode.Mouse0;
 
     private GameObject _currentHolderPrefab;
-
-    private void Start()
-    {
-
-    }
+    private CharacterJoint _characterJoint;
 
     private void Update()
     {
         Debug.DrawRay(transform.position, transform.forward * _rayLength, Color.red);
 
-        InstantiateHolder();
+        if (PlayerStates.PlayerStatesScript.CanHold)
+        {
+            InstantiateHolder();
+        }
     }
 
     private void InstantiateHolder()
@@ -46,6 +48,7 @@ public class Holder : MonoBehaviour
 
                         GameObject instantiatedHolderPrefab = Instantiate(_holderPrefab, holderPoint, Quaternion.identity);
                         _currentHolderPrefab = instantiatedHolderPrefab;
+                        _characterJoint = instantiatedHolderPrefab.GetComponent<CharacterJoint>();
 
                         CharacterJoint characterJoint = instantiatedHolderPrefab.GetComponent<CharacterJoint>();
                         characterJoint.connectedBody = draggedObject.GetComponent<Rigidbody>();
@@ -59,6 +62,11 @@ public class Holder : MonoBehaviour
         }
         else if (Input.GetKeyUp(_holdButton))
         {
+            if (_characterJoint)
+            {
+                _characterJoint.connectedBody.velocity = new Vector3(0f, 0f, 0f);
+            }
+
             Destroy(_currentHolderPrefab);
         }
     }
@@ -68,7 +76,14 @@ public class Holder : MonoBehaviour
         if (_currentHolderPrefab)
         {
             _currentHolderPrefab.transform.position = _holderPoint.position;
-            Debug.Log("I Dragged Object");
+            HolderPointScrolling();
         }
+    }
+
+    private void HolderPointScrolling()
+    {
+        float mouseWheelValue = Input.GetAxis("Mouse ScrollWheel");
+
+        _holderPoint.position += _sensitivity * mouseWheelValue * Time.deltaTime * _holderPoint.localPosition.z * transform.forward;
     }
 }

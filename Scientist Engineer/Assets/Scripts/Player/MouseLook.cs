@@ -35,18 +35,21 @@ public class MouseLook : MonoBehaviour
 
     private void MouseRotation()
     {
-        //Mouse Rotation
-        float mouseHorizontal = Input.GetAxis("Mouse X") * Sensitivity;
-        float mouseVertical = Input.GetAxis("Mouse Y") * -Sensitivity;
+        if (PlayerStates.PlayerStatesScript.CanLook)
+        {
+            //Mouse Rotation
+            float mouseHorizontal = Input.GetAxis("Mouse X") * Sensitivity;
+            float mouseVertical = Input.GetAxis("Mouse Y") * -Sensitivity;
 
-        _clampVerticalRotation.x += mouseVertical;
-        _clampVerticalRotation.x = Mathf.Clamp(_clampVerticalRotation.x, _minRotation, _maxRotation);
+            _clampVerticalRotation.x += mouseVertical;
+            _clampVerticalRotation.x = Mathf.Clamp(_clampVerticalRotation.x, _minRotation, _maxRotation);
 
-        PlayerCamera.transform.Rotate(_clampVerticalRotation.x, 0f, 0f);
-        PlayerCamera.transform.localEulerAngles = _clampVerticalRotation;
+            PlayerCamera.transform.Rotate(_clampVerticalRotation.x, 0f, 0f);
+            PlayerCamera.transform.localEulerAngles = _clampVerticalRotation;
 
-        //Body Rotation
-        _body.Rotate(0f, mouseHorizontal, 0f);
+            //Body Rotation
+            _body.Rotate(0f, mouseHorizontal, 0f);
+        }
     }
 
     private void Zoom()
