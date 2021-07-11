@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("Basic Information")]
+    public int ID;
+    public Sprite Icon;
+    public string ItemName;
+    [TextArea] public string Description;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Header("Additional Info")]
+    public bool isAmmo;
+    public bool isWeapon;
 }
