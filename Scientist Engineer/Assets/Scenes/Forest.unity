@@ -8605,6 +8605,7 @@ GameObject:
   - component: {fileID: 1270759346}
   - component: {fileID: 1270759344}
   - component: {fileID: 1270759345}
+  - component: {fileID: 1270759347}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -8797,6 +8798,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemsPanel: {fileID: 532931389}
   _buttonOpenPanelItems: 105
+--- !u!114 &1270759347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270759337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0daea3f58917bd4781c8e247343d0c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraPosition: {fileID: 963194228}
+  _rayLength: 200
+  _content: {fileID: 516461655}
+  InventoryList: []
 --- !u!1 &1300787434
 GameObject:
   m_ObjectHideFlags: 0
